@@ -50,7 +50,8 @@
 								2 PRF_HMAC_SHA1 
 								3 PRF_HMAC_TIGER	(Not supported yet)
 								4 PRF_AES128_XCBC	(Not supported yet)
-								5 PRF_AES128_CBC 	(See INSTALL to get AES cryptographic suite) -->
+								5 PRF_AES128_CBC 	(See INSTALL to get AES cryptographic suite)
+								6 PRF_HMAC_SHA2_256 -->
 								
 			<INTEGRITY>7</INTEGRITY> <!-- INTEGRITY ALGORITHM
 											1 AUTH_HMAC_MD5_96			(Not supported yet)
@@ -60,7 +61,8 @@
 											5 AUTH_AES_XCBC_96			(Not supported yet)
 											6 AUTH_HMAC_MD5_128			(Not supported yet)
 											7 AUTH_HMAC_SHA1_160 		
-											8 AUTH_AES_CMAC 			(See INSTALL to get AES cryptographic suite)-->
+											8 AUTH_AES_CMAC 			(See INSTALL to get AES cryptographic suite)
+											9 AUTH_HMAC_SHA2_256_128	(HMAC-SHA256 truncated to 128 bits)-->
 		</ALGORITHMS>
 
 		<USER>user1</USER>         <!-- User's credential -->
@@ -103,7 +105,8 @@
 								2 PRF_HMAC_SHA1 
 								3 PRF_HMAC_TIGER	(Not supported yet)
 								4 PRF_AES128_XCBC	(Not supported yet)
-								5 PRF_AES128_CBC 	(See INSTALL to get AES cryptographic suite) -->
+								5 PRF_AES128_CBC 	(See INSTALL to get AES cryptographic suite)
+								6 PRF_HMAC_SHA2_256 -->
 								
 			<INTEGRITY>7</INTEGRITY> <!-- INTEGRITY ALGORITHM
 											1 AUTH_HMAC_MD5_96			(Not supported yet)
@@ -113,7 +116,8 @@
 											5 AUTH_AES_XCBC_96			(Not supported yet)
 											6 AUTH_HMAC_MD5_128			(Not supported yet)
 											7 AUTH_HMAC_SHA1_160 		
-											8 AUTH_AES_CMAC 			(See INSTALL to get AES cryptographic suite)-->
+											8 AUTH_AES_CMAC 			(See INSTALL to get AES cryptographic suite)
+											9 AUTH_HMAC_SHA2_256_128	(HMAC-SHA256 truncated to 128 bits)-->
 		</ALGORITHMS>
 
 		<SERVER_CERTS> <!-- Server certificates configuration -->

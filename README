@@ -72,7 +72,15 @@ o Install
 	- Port <PORT>
 	- Session Timeout: Lifetime of the session. <SESSION><TIMEOUT>
 	- PRF Algorithms: Supported PRF Algorithms. <ALGORITHMS><PRF>
+	    Supported values:
+	      2 - PRF_HMAC_SHA1 (default)
+	      5 - PRF_AES128_CBC (requires --enable-aes)
+	      6 - PRF_HMAC_SHA2_256 (NEW)
 	- Integrity Algorithms: Supported Integrity Algorithms. <ALGORITHMS><INTEGRITY>
+	    Supported values:
+	      7 - AUTH_HMAC_SHA1_160 (default)
+	      8 - AUTH_AES_CMAC (requires --enable-aes)
+	      9 - AUTH_HMAC_SHA2_256_128 (NEW - HMAC-SHA256 truncated to 128 bits)
     - PaC's Settings <PAC>
 	- Client's EAP username <USER>
 	- Client's EAP password <PASSWORD>
@@ -119,6 +127,17 @@ o Install
   You can also run the '--enable-aes' configure option in order to get the AES cryptographic suite available.
 
   You can also run the '--enable-relay' configure option in order to get the PRE functionality integrated within the PaC entity.
+
+ NEW CRYPTOGRAPHIC FEATURES:
+  - AES-128-CTR encryption support for device key protection
+  - PRF_HMAC_SHA2_256 key derivation function (algorithm ID: 6)
+  - AUTH_HMAC_SHA2_256_128 message authentication algorithm (algorithm ID: 9)
+
+  To use the new algorithms, modify the config.xml file:
+  <ALGORITHMS>
+    <PRF>6</PRF>          <!-- Use SHA-256 based PRF -->
+    <INTEGRITY>9</INTEGRITY>  <!-- Use SHA-256 based authentication -->
+  </ALGORITHMS>
   
  4. OpenPANA will need a working installation of a Radius Server using EAP-TLS method.
     OpenPANA will require the following certificate files in config folder or in the current directory:

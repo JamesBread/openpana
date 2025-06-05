@@ -8,3 +8,5 @@
 
 void PRF( u8 * key, u16 key_length, u8 * sequence, u16 sequence_length, u8 * result );
 void PRF_plus( u8 iter, u8 * key, u16 key_length, u8 * sequence, u16 sequence_length, u8 * result);
+void PRF_SHA256( u8 * key, u16 key_length, u8 * sequence, u16 sequence_length, u8 * result );
+void PRF_plus_SHA256( u8 iter, u8 * key, u16 key_length, u8 * sequence, u16 sequence_length, u8 * result);

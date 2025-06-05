@@ -27,6 +27,7 @@
 #include "prf_plus.h"
 #include "panamessages.h"
 #include "cmac.h"
+#include "aes.h"
 
 int sendPana(struct sockaddr_in destaddr, char *msg, int sock) {
 
@@ -356,10 +357,17 @@ u8 * generateAUTH(pana_ctx * session) {
 	else if (PRF_SUITE == PRF_HMAC_SHA1) {
 		PRF_plus(1, session->msk_key, session->key_len, (u8*) sequence, seq_length, result);
 	}
+	else if (PRF_SUITE == PRF_HMAC_SHA2_256) {
+		PRF_plus_SHA256(1, session->msk_key, session->key_len, (u8*) sequence, seq_length, result);
+	}
 	
 #else	
-	//Generate auth with hmac-sha1
-    PRF_plus(1, session->msk_key, session->key_len, (u8*) sequence, seq_length, result);
+	if (PRF_SUITE == PRF_HMAC_SHA2_256) {
+		PRF_plus_SHA256(1, session->msk_key, session->key_len, (u8*) sequence, seq_length, result);
+	} else {
+		//Generate auth with hmac-sha1
+		PRF_plus(1, session->msk_key, session->key_len, (u8*) sequence, seq_length, result);
+	}
 #endif
     
     if (result != NULL) {
@@ -403,9 +411,24 @@ int hashAuth(char *msg, char* key, int key_len) {
 		//Hash with hmac-sha1
 		PRF_plus(1, (u8*) key, key_len, (u8*) msg, ntohs(((pana*)msg)->msg_length), (u8*) (elmnt + sizeof(avp_pana)) );
 	}
+    else if (AUTH_SUITE == AUTH_HMAC_SHA2_256_128){
+		//Hash with hmac-sha256 truncated to 128 bits
+		u8 sha256_result[32];
+		PRF_SHA256((u8*) key, key_len, (u8*) msg, ntohs(((pana*)msg)->msg_length), sha256_result);
+		// Copy only first 16 bytes (128 bits)
+		memcpy((u8*) (elmnt + sizeof(avp_pana)), sha256_result, 16);
+	}
 #else
-	//Hash with hmac-sha1
-    PRF((u8*) key, key_len, (u8*) msg, ntohs(((pana*)msg)->msg_length), (u8*) (elmnt + sizeof(avp_pana)) );
+	if (AUTH_SUITE == AUTH_HMAC_SHA2_256_128){
+		//Hash with hmac-sha256 truncated to 128 bits
+		u8 sha256_result[32];
+		PRF_SHA256((u8*) key, key_len, (u8*) msg, ntohs(((pana*)msg)->msg_length), sha256_result);
+		// Copy only first 16 bytes (128 bits)
+		memcpy((u8*) (elmnt + sizeof(avp_pana)), sha256_result, 16);
+	} else {
+		//Hash with hmac-sha1
+		PRF((u8*) key, key_len, (u8*) msg, ntohs(((pana*)msg)->msg_length), (u8*) (elmnt + sizeof(avp_pana)) );
+	}
 #endif
 
     return 0; //Everything went better than expected
@@ -575,4 +598,33 @@ void * xcalloc (size_t num, size_t size){
 	bzero (new, num * size);
   #endif
   return new;
+}
+
+int encrypt_device_key_aes_ctr(const unsigned char *plaintext, int plaintext_len,
+                               const unsigned char *key, unsigned char *ctr,
+                               unsigned char *ciphertext)
+{
+    aes_context ctx;
+    unsigned char ctr_copy[N_BLOCK];
+    
+    /* Initialize AES context with key */
+    if(aes_set_key(key, 16, &ctx) != EXIT_SUCCESS)
+        return -1;
+    
+    /* Make a copy of counter to preserve original */
+    memcpy(ctr_copy, ctr, N_BLOCK);
+    
+    /* Encrypt using CTR mode */
+    if(aes_ctr_encrypt(plaintext, ciphertext, plaintext_len, ctr_copy, &ctx) != EXIT_SUCCESS)
+        return -1;
+        
+    return 0;
+}
+
+int decrypt_device_key_aes_ctr(const unsigned char *ciphertext, int ciphertext_len,
+                               const unsigned char *key, unsigned char *ctr,
+                               unsigned char *plaintext)
+{
+    /* In CTR mode, encryption and decryption are the same operation */
+    return encrypt_device_key_aes_ctr(ciphertext, ciphertext_len, key, ctr, plaintext);
 }

@@ -622,6 +622,40 @@ return_type aes_cbc_decrypt( const unsigned char *in, unsigned char *out,
 
 #endif
 
+#if defined( AES_ENC_PREKEYED )
+
+/* CTR mode encryption/decryption */
+return_type aes_ctr_encrypt( const unsigned char *in, unsigned char *out,
+                         int length, unsigned char ctr[N_BLOCK], const aes_context ctx[1] )
+{
+    unsigned char keystream[N_BLOCK];
+    int i, j;
+    
+    for(i = 0; i < length; i += N_BLOCK)
+    {
+        /* Encrypt counter to generate keystream */
+        if(aesencrypt(ctr, keystream, ctx) != EXIT_SUCCESS)
+            return EXIT_FAILURE;
+            
+        /* XOR input with keystream to produce output */
+        for(j = 0; j < N_BLOCK && (i + j) < length; j++)
+        {
+            out[i + j] = in[i + j] ^ keystream[j];
+        }
+        
+        /* Increment counter */
+        for(j = N_BLOCK - 1; j >= 0; j--)
+        {
+            if(++ctr[j] != 0)
+                break;
+        }
+    }
+    
+    return EXIT_SUCCESS;
+}
+
+#endif
+
 
 
 //int main(){

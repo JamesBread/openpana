@@ -185,4 +185,34 @@ void pana_fatal (const char *message, ...);
  * */
 void pana_debug (const char *message, ...);
 
+/**
+ * Encrypts device key using AES-128-CTR.
+ * 
+ * @param plaintext The device key to encrypt.
+ * @param plaintext_len Length of the device key.
+ * @param key The encryption key (16 bytes for AES-128).
+ * @param ctr The counter/nonce value (16 bytes).
+ * @param ciphertext Buffer to store the encrypted key.
+ * 
+ * @return 0 on success, -1 on failure.
+ * */
+int encrypt_device_key_aes_ctr(const unsigned char *plaintext, int plaintext_len,
+                               const unsigned char *key, unsigned char *ctr,
+                               unsigned char *ciphertext);
+
+/**
+ * Decrypts device key using AES-128-CTR.
+ * 
+ * @param ciphertext The encrypted device key.
+ * @param ciphertext_len Length of the encrypted key.
+ * @param key The decryption key (16 bytes for AES-128).
+ * @param ctr The counter/nonce value (16 bytes).
+ * @param plaintext Buffer to store the decrypted key.
+ * 
+ * @return 0 on success, -1 on failure.
+ * */
+int decrypt_device_key_aes_ctr(const unsigned char *ciphertext, int ciphertext_len,
+                               const unsigned char *key, unsigned char *ctr,
+                               unsigned char *plaintext);
+
 #endif

@@ -88,6 +88,12 @@ return_type aes_cbc_encrypt( const unsigned char *in,
                          int n_block,
                          unsigned char iv[N_BLOCK],
                          const aes_context ctx[1] ); 
+
+return_type aes_ctr_encrypt( const unsigned char *in,
+                         unsigned char *out,
+                         int length,
+                         unsigned char ctr[N_BLOCK],
+                         const aes_context ctx[1] );
 #endif
 
 #if defined( AES_DEC_PREKEYED )
