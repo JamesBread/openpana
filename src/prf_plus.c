@@ -6,12 +6,12 @@
 #include "prf_plus.h"
 
 void PRF( u8 * key, u16 key_length, u8 * sequence, u16 sequence_length, u8 * result ) {
-    u32 size;
-    HMAC((EVP_MD*) EVP_sha1(), key, key_length, sequence, sequence_length, result, &size);
+    unsigned int size;
+    HMAC(EVP_sha1(), key, key_length, sequence, sequence_length, result, &size);
 }
 
 void PRF_plus( u8 iter, u8 * key, u16 key_length, u8 * sequence, u16 sequence_length, u8 * result ){    
-     u16 prf_size = EVP_MD_size((EVP_MD*) EVP_sha1());
+     u16 prf_size = EVP_MD_size(EVP_sha1());
     u8 *temp = malloc(prf_size*sizeof(u8));
 
     u8 *new_sequence = malloc((prf_size+sequence_length+1)*sizeof(u8)); 

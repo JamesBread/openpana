@@ -23,7 +23,7 @@
  */
 
 #include "panamessages.h"
-//#include "state_machines/statemachine.h"
+#include "state_machines/statemachine.h"
 #ifndef ISPRE
 	#include "state_machines/session.h"
 #endif

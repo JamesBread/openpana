@@ -138,7 +138,9 @@ OBJS_lib=$(OBJS_both) $(OBJS_peer) $(OBJS_server)
 #ifneq ($(CONFIG_SOLIB), yes)
 #LIBEAP = libeap.a
 libeap.a: $(OBJS_lib)
-	$(AR) crT libeap.a $(OBJS_lib)
+	rm -f libeap.a
+	$(AR) cq libeap.a $(OBJS_both) $(OBJS_peer) $(OBJS_server)
+	cd ../wpa_supplicant/src/tls && $(AR) x libtls.a && $(AR) q ../../../libeapstack/libeap.a *.o && rm -f *.o
 	$(RANLIB) libeap.a
 
 #else

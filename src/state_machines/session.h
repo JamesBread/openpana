@@ -24,6 +24,7 @@
 #ifndef SESSION_H
 #define SESSION_H
 #include "include.h"
+#include "../wpa_supplicant/src/utils/common.h"
 
 /**
  * Declaration of common configurable variables
