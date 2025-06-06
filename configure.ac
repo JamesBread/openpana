@@ -46,7 +46,7 @@ AC_TYPE_UINT32_T
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_CHECK_FUNCS([gettimeofday inet_ntoa memset pow select socket bzero])
-AC_CHECK_FUNCS([nanosleep usleep],break)
+AC_CHECK_FUNCS([nanosleep usleep])
 
 # Set default AM_CFLAGS for the complete project.
 AM_CFLAGS=" $AM_CFLAGS "
@@ -138,4 +138,8 @@ XML_FLAGS=$(xml2-config --cflags) # Adds the includes needed to build using xml2
 AC_SUBST(AM_CPPFLAGS, " $AM_CPPFLAGS -L./state_machines -L./libeapstack $XML_FLAGS ")
 #AC_SUBST(WPA_SRC,"");
 
-AC_OUTPUT(Makefile src/Makefile src/libeapstack/Makefile)
+AC_OUTPUT([
+Makefile
+src/Makefile
+src/libeapstack/Makefile
+])
