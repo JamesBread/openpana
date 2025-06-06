@@ -116,8 +116,8 @@ static void parse_xml_client(xmlNode * a_node) {
 						checkconfig=TRUE;
 					}
 					else {
-						LOCALIP = XMALLOC(char, strlen(aux));
-						memcpy(LOCALIP, aux, strlen(aux));
+                                                LOCALIP = XMALLOC(char, strlen(aux) + 1);
+                                                memcpy(LOCALIP, aux, strlen(aux) + 1);
 						xmlFree(value);
 					}
 				}
@@ -125,8 +125,8 @@ static void parse_xml_client(xmlNode * a_node) {
 			else if (strcmp((char *)cur_node->name, "IP_PAA")==0){  // IP configurable value
 				if (pac) {
 					xmlChar * value = xmlNodeGetContent(cur_node);
-					DESTIP = XMALLOC(char,strlen((char*)value));
-					sprintf(DESTIP, "%s", (char *)value);
+                                        DESTIP = XMALLOC(char,strlen((char*)value) + 1);
+                                        sprintf(DESTIP, "%s", (char *)value);
 					xmlFree (value);
 				}
 			}
@@ -213,8 +213,8 @@ static void parse_xml_client(xmlNode * a_node) {
 			else if (strcmp((char *)cur_node->name, "USER")==0){ // User name configurable value
 				if (pac){
 					char * value = (char*)xmlNodeGetContent(cur_node);
-					USER = XMALLOC(char,strlen((char*)value));
-					sprintf(USER, "%s",(char *) value);
+                                        USER = XMALLOC(char,strlen((char*)value) + 1);
+                                        sprintf(USER, "%s",(char *) value);
 					xmlFree(value);
 					
 				}
@@ -222,8 +222,8 @@ static void parse_xml_client(xmlNode * a_node) {
 			else if (strcmp((char *)cur_node->name, "PASSWORD")==0){ // Password configurable value
 				if (pac){
 					char * value = (char*)xmlNodeGetContent(cur_node);
-					PASSWORD = XMALLOC(char,strlen((char*)value));
-					sprintf(PASSWORD, "%s",(char *) value);
+                                        PASSWORD = XMALLOC(char,strlen((char*)value) + 1);
+                                        sprintf(PASSWORD, "%s",(char *) value);
 					xmlFree(value);
 				}
 			}
@@ -242,8 +242,8 @@ static void parse_xml_client(xmlNode * a_node) {
 						}
 						else{
 							printf("PANA: Loading %s from current directory.\n",value);
-							CA_CERT = XMALLOC(char,strlen((char*)value));
-							sprintf(CA_CERT, "%s",(char *) value);
+                                                        CA_CERT = XMALLOC(char,strlen((char*)value) + 1);
+                                                        sprintf(CA_CERT, "%s",(char *) value);
 						}
 					}
 					else{
@@ -269,8 +269,8 @@ static void parse_xml_client(xmlNode * a_node) {
 						}
 						else{
 							printf("PANA: Loading %s from current directory.\n",value);
-							CLIENT_CERT = XMALLOC(char,strlen((char*)value));
-							sprintf(CLIENT_CERT, "%s",(char *) value);
+                                                        CLIENT_CERT = XMALLOC(char,strlen((char*)value) + 1);
+                                                        sprintf(CLIENT_CERT, "%s",(char *) value);
 						}
 					}
 					else{
@@ -294,8 +294,8 @@ static void parse_xml_client(xmlNode * a_node) {
 						}
 						else{
 							printf("PANA: Loading %s from current directory.\n",value);
-							CLIENT_KEY = XMALLOC(char,strlen((char*)value));
-							sprintf(CLIENT_KEY, "%s",(char *) value);
+                                                        CLIENT_KEY = XMALLOC(char,strlen((char*)value) + 1);
+                                                        sprintf(CLIENT_KEY, "%s",(char *) value);
 						}
 					}
 					else{
@@ -308,8 +308,8 @@ static void parse_xml_client(xmlNode * a_node) {
 			else if (strcmp((char *)cur_node->name, "PRIVATE_KEY")==0){ // Client private key value
 				if (pac){
 					char * value = (char*)xmlNodeGetContent(cur_node);
-					PRIVATE_KEY = XMALLOC(char,strlen((char*)value));
-					sprintf(PRIVATE_KEY, "%s",(char *) value);
+                                        PRIVATE_KEY = XMALLOC(char,strlen((char*)value) + 1);
+                                        sprintf(PRIVATE_KEY, "%s",(char *) value);
 					xmlFree(value);
 				}
 			}
@@ -514,24 +514,24 @@ static void parse_xml_server(xmlNode * a_node){
 			else if (strcmp((char *)cur_node->name, "CA_CERT")==0){ // CA cert's name.
 				if (paa){
 					char * value = (char *)xmlNodeGetContent(cur_node);
-					CA_CERT = XMALLOC(char,strlen((char*)value));
-					sprintf(CA_CERT, "%s",(char *) value);
+                                        CA_CERT = XMALLOC(char,strlen((char*)value) + 1);
+                                        sprintf(CA_CERT, "%s",(char *) value);
 					xmlFree(value);
 				}
 			}
 			else if (strcmp((char *)cur_node->name, "SERVER_CERT")==0){ // Server certificate's name
 				if (paa){
 					char * value = (char *)xmlNodeGetContent(cur_node);
-					SERVER_CERT = XMALLOC(char,strlen((char*)value));
-					sprintf(SERVER_CERT, "%s",(char *) value);
+                                        SERVER_CERT = XMALLOC(char,strlen((char*)value) + 1);
+                                        sprintf(SERVER_CERT, "%s",(char *) value);
 					xmlFree(value);
 				}
 			}
 			else if (strcmp((char *)cur_node->name, "SERVER_KEY")==0){ // Server key certificate's name
 				if (paa){
 					char * value = (char*)xmlNodeGetContent(cur_node);
-					SERVER_KEY = XMALLOC(char,strlen((char*)value));
-					sprintf(SERVER_KEY, "%s",(char *) value);
+                                        SERVER_KEY = XMALLOC(char,strlen((char*)value) + 1);
+                                        sprintf(SERVER_KEY, "%s",(char *) value);
 					xmlFree(value);
 				}
 			}
@@ -551,8 +551,8 @@ static void parse_xml_server(xmlNode * a_node){
 			else if (strcmp((char *)cur_node->name, "AS_IP")==0){ // IP address of AS
 				if (paa){
 					char * value = (char*)xmlNodeGetContent(cur_node);
-					AS_IP = XMALLOC(char,strlen((char*)value));
-					sprintf(AS_IP, "%s",(char *) value);
+                                        AS_IP = XMALLOC(char,strlen((char*)value) + 1);
+                                        sprintf(AS_IP, "%s",(char *) value);
 					xmlFree(value);
 				}
 			}
@@ -570,8 +570,8 @@ static void parse_xml_server(xmlNode * a_node){
 			else if (strcmp((char *)cur_node->name, "SHARED_SECRET")==0){ // Shared secret between EAP auth & EAP server.
 				if (paa){
 					char * value = (char*)xmlNodeGetContent(cur_node);
-					AS_SECRET = XMALLOC(char,strlen((char*)value));
-					sprintf(AS_SECRET, "%s",(char *) value);
+                                        AS_SECRET = XMALLOC(char,strlen((char*)value) + 1);
+                                        sprintf(AS_SECRET, "%s",(char *) value);
 					xmlFree(value);
 				}
 			}
@@ -650,8 +650,8 @@ static void parse_xml_pre(xmlNode * a_node) {
 				if (pre){
 
 					xmlChar * value = xmlNodeGetContent(cur_node);
-					IP_PAA = XMALLOC(char,strlen((char*)value));
-					sprintf(IP_PAA, "%s",(char *) value);
+                                        IP_PAA = XMALLOC(char,strlen((char*)value) + 1);
+                                        sprintf(IP_PAA, "%s",(char *) value);
 					xmlFree(value);
 				}
 			}
@@ -676,8 +676,8 @@ static void parse_xml_pre(xmlNode * a_node) {
 					checkconfig=TRUE;
 				}
 				else {
-					IP_LISTEN_PAC = XMALLOC(char, strlen(aux));
-					memcpy(IP_LISTEN_PAC, aux, strlen(aux));
+                                        IP_LISTEN_PAC = XMALLOC(char, strlen(aux) + 1);
+                                        memcpy(IP_LISTEN_PAC, aux, strlen(aux) + 1);
 					xmlFree(value);
 				}
 			}
@@ -701,8 +701,8 @@ static void parse_xml_pre(xmlNode * a_node) {
 					checkconfig=TRUE;
 				}
 				else {
-					IP_LISTEN_PAA = XMALLOC(char, strlen(aux));
-					memcpy(IP_LISTEN_PAA, aux, strlen(aux));
+                                        IP_LISTEN_PAA = XMALLOC(char, strlen(aux) + 1);
+                                        memcpy(IP_LISTEN_PAA, aux, strlen(aux) + 1);
 					xmlFree(value);
 				}
 			}
