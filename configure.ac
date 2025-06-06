@@ -85,8 +85,7 @@ if test x"$debugit" = x"yes"; then
 else
     AC_DEFINE([NDEBUG],[],[No-debug Mode])
     AM_CFLAGS="$AM_CFLAGS -Os -ffunction-sections -fdata-sections "
-    AC_SUBST(DBG_LINKOPT," -Wl ")
-    #AM_CPPFLAGS="$AM_CPPFLAGS -Wl --gc-sections "
+    AC_SUBST(DBG_LINKOPT," -Wl,--gc-sections ")
 fi
 
 ##########################################################################
