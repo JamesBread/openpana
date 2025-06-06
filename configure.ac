@@ -138,8 +138,9 @@ XML_FLAGS=$(xml2-config --cflags) # Adds the includes needed to build using xml2
 AC_SUBST(AM_CPPFLAGS, " $AM_CPPFLAGS -L./state_machines -L./libeapstack $XML_FLAGS ")
 #AC_SUBST(WPA_SRC,"");
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 src/Makefile
 src/libeapstack/Makefile
 ])
+AC_OUTPUT
