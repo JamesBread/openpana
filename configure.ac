@@ -1,17 +1,21 @@
 
 AC_PREREQ([2.65])
 AC_INIT([OpenPANA], [0.2.4], [openpana-users@lists.sourceforge.net],[openpana],[http://openpana.sf.net])
+# Disable problematic cache processing
+ac_cv_env_build_alias_set=
+ac_cv_env_host_alias_set=
+ac_cv_env_target_alias_set=
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE()
 AC_CONFIG_HEADERS([config.h])
 
-# store current user given compiler flags to avoid default setup via AC_PROG_CC_C99
+# store current user given compiler flags to avoid default setup via AC_PROG_CC
 OLD_CFLAGS=$CFLAGS
 
 # Checks for programs.
 AC_PROG_AWK
-AC_PROG_CC_C99
+AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
@@ -51,20 +55,12 @@ AC_CHECK_FUNCS([nanosleep usleep])
 # Set default AM_CFLAGS for the complete project.
 AM_CFLAGS=" $AM_CFLAGS "
 
-######################################################################
-# DOXYGEN SUPPORT
-######################################################################
-
-DX_HTML_FEATURE(ON)
-DX_CHM_FEATURE(OFF)
-DX_CHI_FEATURE(OFF)
-DX_MAN_FEATURE(OFF)
-DX_RTF_FEATURE(OFF)
-DX_XML_FEATURE(OFF)
-DX_PDF_FEATURE(ON)
-DX_PS_FEATURE(OFF)
-
-DX_INIT_DOXYGEN([$PACKAGE_NAME],[doxygen.cfg],[doc])
+# Simple doxygen check
+AC_CHECK_PROG(DOXYGEN, doxygen, doxygen)
+if test -z "$DOXYGEN"; then
+    AC_MSG_WARN([doxygen not found - documentation will not be built])
+fi
+AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 
 ##########################################################################
 # debug compilation support

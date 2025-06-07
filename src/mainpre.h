@@ -31,12 +31,12 @@
 
 //Variables needed for PRE communications
 
-int IP_VERSION;
-char * IP_LISTEN_PAC;
-short PORT_LISTEN_PAC;
-char * IP_LISTEN_PAA;
-short PORT_LISTEN_PAA;
-char * IP_PAA;
-short PORT_PAA;
+extern int IP_VERSION;
+extern char * IP_LISTEN_PAC;
+extern short PORT_LISTEN_PAC;
+extern char * IP_LISTEN_PAA;
+extern short PORT_LISTEN_PAA;
+extern char * IP_PAA;
+extern short PORT_PAA;
 
 #endif

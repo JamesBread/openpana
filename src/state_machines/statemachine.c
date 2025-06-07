@@ -29,116 +29,119 @@
 #include "../prf_plus.h"
 #include "../lalarm.h"
 
+// Global variable definitions
+sm_action table [NUM_STATES][NUM_EVENTS];
+pana_ctx * current_session;
 
 // Init the state machine table's positions
 void initTable() {
-    table [INITIAL][RETRANSMISSION] = retransmission;
+    table [INITIAL][EVENT_RETRANSMISSION] = retransmission;
 
-    table [WAIT_PNA_PING][RETRANSMISSION] = retransmission;
+    table [WAIT_PNA_PING][EVENT_RETRANSMISSION] = retransmission;
 
-    table [WAIT_PAA][RETRANSMISSION] = retransmission;
+    table [WAIT_PAA][EVENT_RETRANSMISSION] = retransmission;
 
-    table [WAIT_EAP_MSG][RETRANSMISSION] = retransmission;
+    table [WAIT_EAP_MSG][EVENT_RETRANSMISSION] = retransmission;
 
-    table [WAIT_EAP_RESULT][RETRANSMISSION] = retransmission;
+    table [WAIT_EAP_RESULT][EVENT_RETRANSMISSION] = retransmission;
 
-    table [WAIT_EAP_RESULT_CLOSE][RETRANSMISSION] = retransmission;
+    table [WAIT_EAP_RESULT_CLOSE][EVENT_RETRANSMISSION] = retransmission;
 
-    table [OPEN][RETRANSMISSION] = retransmission;
+    table [OPEN][EVENT_RETRANSMISSION] = retransmission;
 
-    table [WAIT_PNA_REAUTH][RETRANSMISSION] = retransmission;
+    table [WAIT_PNA_REAUTH][EVENT_RETRANSMISSION] = retransmission;
 
-    table [SESS_TERM][RETRANSMISSION] = retransmission;
+    table [SESS_TERM][EVENT_RETRANSMISSION] = retransmission;
 
-    table [WAIT_PAN_OR_PAR][RETRANSMISSION] = retransmission;
+    table [WAIT_PAN_OR_PAR][EVENT_RETRANSMISSION] = retransmission;
 
-    table [WAIT_FAIL_PAN][RETRANSMISSION] = retransmission;
+    table [WAIT_FAIL_PAN][EVENT_RETRANSMISSION] = retransmission;
 
-    table [WAIT_SUCC_PAN][RETRANSMISSION] = retransmission;
+    table [WAIT_SUCC_PAN][EVENT_RETRANSMISSION] = retransmission;
 
-    table [WAIT_PAN_OR_PAR][RETRANSMISSION] = retransmission;
+    table [WAIT_PAN_OR_PAR][EVENT_RETRANSMISSION] = retransmission;
     //-----------------------------------------------------------------------//
 
-    table [INITIAL][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [INITIAL][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [WAIT_PNA_PING][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [WAIT_PNA_PING][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [WAIT_PAA][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [WAIT_PAA][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [WAIT_EAP_MSG][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [WAIT_EAP_MSG][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [WAIT_EAP_RESULT][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [WAIT_EAP_RESULT][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [WAIT_EAP_RESULT_CLOSE][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [WAIT_EAP_RESULT_CLOSE][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [OPEN][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [OPEN][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [WAIT_PNA_REAUTH][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [WAIT_PNA_REAUTH][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [SESS_TERM][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [SESS_TERM][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [WAIT_PAN_OR_PAR][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [WAIT_PAN_OR_PAR][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [WAIT_FAIL_PAN][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [WAIT_FAIL_PAN][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
 
-    table [WAIT_SUCC_PAN][REACH_MAX_NUM_RT] = reachMaxNumRt;
+    table [WAIT_SUCC_PAN][EVENT_REACH_MAX_NUM_RT] = reachMaxNumRt;
     //------------------------------------------------------------------------//
 
     // This event doesn't work with INITIAL state
-    table [WAIT_PNA_PING][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [WAIT_PNA_PING][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
 
-    table [WAIT_PAA][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [WAIT_PAA][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
 
-    table [WAIT_EAP_MSG][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [WAIT_EAP_MSG][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
 
-    table [WAIT_EAP_RESULT][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [WAIT_EAP_RESULT][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
 
-    table [WAIT_EAP_RESULT_CLOSE][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [WAIT_EAP_RESULT_CLOSE][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
 
-    table [OPEN][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [OPEN][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
 
-    table [WAIT_PNA_REAUTH][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [WAIT_PNA_REAUTH][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
 
-    table [SESS_TERM][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [SESS_TERM][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
 
-    table [WAIT_PAN_OR_PAR][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [WAIT_PAN_OR_PAR][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
 
-    table [WAIT_FAIL_PAN][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [WAIT_FAIL_PAN][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
 
-    table [WAIT_SUCC_PAN][LIVENESS_TEST_PEER] = livenessTestPeer;
+    table [WAIT_SUCC_PAN][EVENT_LIVENESS_TEST_PEER] = livenessTestPeer;
     //------------------------------------------------------------------------//
 
     // This event doesn't work with WAIT_PNA_PING state
-    table [INITIAL][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [INITIAL][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
 
-    table [WAIT_PAA][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [WAIT_PAA][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
 
-    table [WAIT_EAP_MSG][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [WAIT_EAP_MSG][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
 
-    table [WAIT_EAP_RESULT][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [WAIT_EAP_RESULT][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
 
-    table [WAIT_EAP_RESULT_CLOSE][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [WAIT_EAP_RESULT_CLOSE][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
 
-    table [OPEN][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [OPEN][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
 
-    table [WAIT_PNA_REAUTH][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [WAIT_PNA_REAUTH][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
 
-    table [SESS_TERM][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [SESS_TERM][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
 
-    table [WAIT_PAN_OR_PAR][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [WAIT_PAN_OR_PAR][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
 
-    table [WAIT_FAIL_PAN][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [WAIT_FAIL_PAN][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
 
-    table [WAIT_SUCC_PAN][LIVENESS_TEST_RESPONSE] = livenessTestResponse;
+    table [WAIT_SUCC_PAN][EVENT_LIVENESS_TEST_RESPONSE] = livenessTestResponse;
     //-----------------------------------------------------------------------//
     //Catch all event on closed state
-    table [CLOSED][RETRANSMISSION] = allEventClosedState;
+    table [CLOSED][EVENT_RETRANSMISSION] = allEventClosedState;
 
-    table [CLOSED][REACH_MAX_NUM_RT] = allEventClosedState;
+    table [CLOSED][EVENT_REACH_MAX_NUM_RT] = allEventClosedState;
 
-    table [CLOSED][LIVENESS_TEST_PEER] = allEventClosedState;
+    table [CLOSED][EVENT_LIVENESS_TEST_PEER] = allEventClosedState;
 
-    table [CLOSED][LIVENESS_TEST_RESPONSE] = allEventClosedState;
+    table [CLOSED][EVENT_LIVENESS_TEST_RESPONSE] = allEventClosedState;
 
     //-----------------------------------------------------------------------//
 }
@@ -436,7 +439,7 @@ int keyAvailable() {
 	//Tries to retrieve a Master Session Key (MSK) from the EAP entity
 		if (eapKeyAvailable == TRUE) {
 			pana_debug("EAP lower-layer Key Available");
-			unsigned int key_len;
+			size_t key_len;
 			u8* key = NULL;
 			#ifdef ISCLIENT
 			key = eap_peer_get_eapKeyData(&(current_session->eap_ctx), &key_len);

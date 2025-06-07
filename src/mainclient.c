@@ -26,6 +26,7 @@
  */
  
 #include "mainclient.h"
+#include "../config.h"
 
 #include "state_machines/statemachine.h"
 #include "panamessages.h"
@@ -38,6 +39,36 @@
 #ifdef PACPRE
 	#include "mainpre.h"
 #endif
+
+//Global client variables
+int IP_VERSION;
+int PRF_SUITE;
+int AUTH_SUITE;
+int FAILED_SESS_TIMEOUT_CONFIG;
+short SRCPORT;
+short DSTPORT;
+char* DESTIP;
+char* LOCALIP;
+
+char* USER;
+char* PASSWORD;
+char* CA_CERT;
+char* CLIENT_CERT;
+char* CLIENT_KEY;
+char* PRIVATE_KEY;
+int FRAG_SIZE;
+int PING_TIME;
+int NUMBER_PING;
+int NUMBER_PING_AUX;
+bool EAP_PIGGYBACK;
+
+//Global PRE variables (needed by loadconfig)
+char * IP_LISTEN_PAC;
+short PORT_LISTEN_PAC;
+char * IP_LISTEN_PAA;
+short PORT_LISTEN_PAA;
+char * IP_PAA;
+short PORT_PAA;
 
 /** Flag to detect if a signal has been received. Used to handle the Ctrl-C signal.
  * */

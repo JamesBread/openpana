@@ -18,6 +18,8 @@
 
 #include "common.h"
 #include "radius.h"
+
+pthread_mutex_t mutex_radius;
 #include "radius_client.h"
 #include "eloop.h"
 
