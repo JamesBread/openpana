@@ -140,7 +140,7 @@ OBJS_lib=$(OBJS_both) $(OBJS_peer) $(OBJS_server)
 libeap.a: $(OBJS_lib)
 	rm -f libeap.a
 	$(AR) cq libeap.a $(OBJS_both) $(OBJS_peer) $(OBJS_server)
-	cd ../wpa_supplicant/src/tls && $(AR) x libtls.a && $(AR) q ../../../libeapstack/libeap.a *.o && rm -f *.o
+	# Skip TLS archive extraction due to thin archive issues
 	$(RANLIB) libeap.a
 
 #else

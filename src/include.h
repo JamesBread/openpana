@@ -51,7 +51,7 @@
 #ifdef HAVE_INTTYPES_H
 #include <inttypes.h>
 #endif
-#ifdef HAVE_LIBXML2
+#if defined(HAVE_LIBXML2) || 1
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #endif
@@ -99,14 +99,36 @@
 #else
 	#define true 1
 	#define false 0
-	typedef int bool
+	typedef int bool;
 #endif
 
 #define TRUE true
 #define FALSE false
 
+/* PANA algorithm suite constants */
+#define DEFAULT_PRF_SUITE 1
+#define DEFAULT_AUTH_SUITE 1
+#define DEFAULT_INTEG_SUITE 1
+#define DEFAULT_ENC_SUITE 1
+
+/* PANA state machine events */
+#define EVENT_RETRANSMISSION 0
+#define EVENT_REACH_MAX_NUM_RT 1
+#define EVENT_LIVENESS_TEST_PEER 2
+#define EVENT_LIVENESS_TEST_RESPONSE 3
+#define EVENT_RTX_TIMEOUT 4
+#define EVENT_SESS_TIMEOUT 5
+#define EVENT_PANA_PING 6
+#define EVENT_TERMINATE 7
+
 #include <stdarg.h>
-#include <stdio.h>      
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <pthread.h>
+#include <strings.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <ifaddrs.h>
 #include <netinet/in.h> 

@@ -18,7 +18,7 @@
 #include "ip_addr.h"
 
 
-pthread_mutex_t mutex_radius;
+extern pthread_mutex_t mutex_radius;
 
 struct radius_msg;
 

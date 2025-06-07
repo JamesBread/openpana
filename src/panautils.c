@@ -495,18 +495,18 @@ int Hex2Dec (char * value, int length) {
 }
 
 double getTime(){
-	double time;
+	double current_time;
 	
 	#ifdef HAVE_GETTIMEOFDAY
 		struct timeval tv; 
 		gettimeofday(&tv, NULL);
-		time = tv.tv_sec;
-		time += tv.tv_usec / 1000000.0;
+		current_time = tv.tv_sec;
+		current_time += tv.tv_usec / 1000000.0;
 	#else
-		time = time(NULL);
+		current_time = time(NULL);
 	#endif
 		
-    return time;
+    return current_time;
 }
 
 void waitusec(unsigned int wait){

@@ -147,10 +147,10 @@ typedef int (*sm_action)();
  * machine can be active at any given time. Rows are the states and
  * columns are the events. By invoking the table with a state and
  * associated event, the corresponding callback function is called. */
-sm_action table [NUM_STATES][NUM_EVENTS];
+extern sm_action table [NUM_STATES][NUM_EVENTS];
 
 /** Pointer to the current PANA session.*/
-pana_ctx * current_session;
+extern pana_ctx * current_session;
 
 // Functions' headers
 /**

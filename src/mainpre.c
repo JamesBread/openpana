@@ -24,11 +24,22 @@
 
 #include <signal.h>
 #include <errno.h>
+#include <sys/select.h>
 
 #include "mainpre.h"
+#include "../config.h"
 #include "loadconfig.h"
 #include "panamessages.h"
 #include "panautils.h"
+
+//Global PRE variables
+int IP_VERSION;
+char * IP_LISTEN_PAC;
+short PORT_LISTEN_PAC;
+char * IP_LISTEN_PAA;
+short PORT_LISTEN_PAA;
+char * IP_PAA;
+short PORT_PAA;
 
 //Global variables
 static bool fin = FALSE;

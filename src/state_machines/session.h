@@ -36,26 +36,26 @@
 /**
  * Declaration of client configurable variables
  * */
-int IP_VERSION;		// Version of IP protocol used in PANA communication
-int PRF_SUITE;   //PRF algorithm negociated in handshake
-int AUTH_SUITE;   // Integrity algorithm negociated in handshake
-int FAILED_SESS_TIMEOUT_CONFIG; // Timeout used in the PANA session saved in PaC
-short SRCPORT;  // Source port used in messages sent to PAA
-short DSTPORT;  // Destination port used in messages sent to PAA
-char* DESTIP;   // Destination ip used in messages sent to PAA
-char* LOCALIP;  // Source IP used in messages sent to PAA
+extern int IP_VERSION;		// Version of IP protocol used in PANA communication
+extern int PRF_SUITE;   //PRF algorithm negociated in handshake
+extern int AUTH_SUITE;   // Integrity algorithm negociated in handshake
+extern int FAILED_SESS_TIMEOUT_CONFIG; // Timeout used in the PANA session saved in PaC
+extern short SRCPORT;  // Source port used in messages sent to PAA
+extern short DSTPORT;  // Destination port used in messages sent to PAA
+extern char* DESTIP;   // Destination ip used in messages sent to PAA
+extern char* LOCALIP;  // Source IP used in messages sent to PAA
 
-char* USER;     // User's name used in the authentication phase
-char* PASSWORD; // Password used in the authentication phase
-char* CA_CERT;  // Name of CA's cert
-char* CLIENT_CERT; // Name of client's cert
-char* CLIENT_KEY;  // Name of client key's cert
-char* PRIVATE_KEY; // Key used by the client in the certificates.
-int FRAG_SIZE;     // Size of eap's fragments.
-int PING_TIME;	   // Time to wait for test channel status in the access phase.
-int NUMBER_PING;   // Number of ping messages to be exchanged.
-int NUMBER_PING_AUX;   // Number of ping messages to be exchanged (auxiliar variable).
-bool EAP_PIGGYBACK;    // Indicates if eap piggyback is activated.
+extern char* USER;     // User's name used in the authentication phase
+extern char* PASSWORD; // Password used in the authentication phase
+extern char* CA_CERT;  // Name of CA's cert
+extern char* CLIENT_CERT; // Name of client's cert
+extern char* CLIENT_KEY;  // Name of client key's cert
+extern char* PRIVATE_KEY; // Key used by the client in the certificates.
+extern int FRAG_SIZE;     // Size of eap's fragments.
+extern int PING_TIME;	   // Time to wait for test channel status in the access phase.
+extern int NUMBER_PING;   // Number of ping messages to be exchanged.
+extern int NUMBER_PING_AUX;   // Number of ping messages to be exchanged (auxiliar variable).
+extern bool EAP_PIGGYBACK;    // Indicates if eap piggyback is activated.
 #endif
 
 #ifdef ISSERVER //Include session variables only for PANA servers
@@ -64,25 +64,25 @@ bool EAP_PIGGYBACK;    // Indicates if eap piggyback is activated.
 /**
  * Declaration of server configurable variables
  * */
-int IP_VERSION;		// Version of IP protocol used in PANA communication
-int PRF_SUITE;  //PRF algorithm negociated in handshake
-int AUTH_SUITE; // Integrity algorithm negociated ni handshake
-int SRCPORT;			// Source port used in messages sent to PaC
-int LIFETIME_SESSION_TIMEOUT_CONFIG;  // Timeout used in the PANA session saved in PAA
-int LIFETIME_SESSION_CLIENT_TIMEOUT_CONFIG; // Timeout to send to PaC
-int TIME_PCI;			// Timeout without a PANA-Answer for the first PANA-Request message.
-int NUM_WORKERS;		// Number of threads running as "workers"
+extern int IP_VERSION;		// Version of IP protocol used in PANA communication
+extern int PRF_SUITE;  //PRF algorithm negociated in handshake
+extern int AUTH_SUITE; // Integrity algorithm negociated ni handshake
+extern int SRCPORT;			// Source port used in messages sent to PaC
+extern int LIFETIME_SESSION_TIMEOUT_CONFIG;  // Timeout used in the PANA session saved in PAA
+extern int LIFETIME_SESSION_CLIENT_TIMEOUT_CONFIG; // Timeout to send to PaC
+extern int TIME_PCI;			// Timeout without a PANA-Answer for the first PANA-Request message.
+extern int NUM_WORKERS;		// Number of threads running as "workers"
 
-char* CA_CERT;          // Name of CA's cert
-char* SERVER_CERT;      // Name of AAA server's cert
-char* SERVER_KEY;       // Name of AAA server's key cert
-int IP_VERSION_AUTH;	// Version of IP protocol used in AAA comunication
-char* AS_IP;		    // AAA server's IP
-short AS_PORT;          // AAA server's port
-char* AS_SECRET;        // Shared secret between AAA client and server
-int PING_TIME;	   // Time to wait for test channel status in the access phase.
-int NUMBER_PING;   // Number of ping messages to be exchanged.
-int NUMBER_PING_AUX;   // Number of ping messages to be exchanged (auxiliar variable).
+extern char* CA_CERT;          // Name of CA's cert
+extern char* SERVER_CERT;      // Name of AAA server's cert
+extern char* SERVER_KEY;       // Name of AAA server's key cert
+extern int IP_VERSION_AUTH;	// Version of IP protocol used in AAA comunication
+extern char* AS_IP;		    // AAA server's IP
+extern short AS_PORT;          // AAA server's port
+extern char* AS_SECRET;        // Shared secret between AAA client and server
+extern int PING_TIME;	   // Time to wait for test channel status in the access phase.
+extern int NUMBER_PING;   // Number of ping messages to be exchanged.
+extern int NUMBER_PING_AUX;   // Number of ping messages to be exchanged (auxiliar variable).
 #endif
 
 #include "../panamessages.h"

@@ -751,7 +751,7 @@ int newKeyAvailable() {
 	//Tries to retrieve a Master Session Key (MSK) from the EAP entity
 		if (eapKeyAvailable == TRUE) {
 			pana_debug("EAP lower-layer Key Available");
-			unsigned int key_len;
+			size_t key_len;
 			#ifdef ISCLIENT
 			u8* key = eap_peer_get_eapKeyData(&(current_session->eap_ctx), &key_len);
 			#endif

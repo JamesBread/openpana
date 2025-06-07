@@ -26,6 +26,8 @@
  */
 
 #include "mainserver.h"
+#include "../config.h"
+#include <semaphore.h>
 
 #include "state_machines/statemachine.h"
 #include "state_machines/paamachine.h"
@@ -35,6 +37,35 @@
 #include "panautils.h"
 #include "lalarm.h"
 #include "prf_plus.h"
+
+//Global server variables
+int IP_VERSION;
+int PRF_SUITE;
+int AUTH_SUITE;
+int SRCPORT;
+int LIFETIME_SESSION_TIMEOUT_CONFIG;
+int LIFETIME_SESSION_CLIENT_TIMEOUT_CONFIG;
+int TIME_PCI;
+int NUM_WORKERS;
+
+char* CA_CERT;
+char* SERVER_CERT;
+char* SERVER_KEY;
+int IP_VERSION_AUTH;
+char* AS_IP;
+short AS_PORT;
+char* AS_SECRET;
+int PING_TIME;
+int NUMBER_PING;
+int NUMBER_PING_AUX;
+
+//Global PRE variables (needed by loadconfig)
+char * IP_LISTEN_PAC;
+short PORT_LISTEN_PAC;
+char * IP_LISTEN_PAA;
+short PORT_LISTEN_PAA;
+char * IP_PAA;
+short PORT_PAA;
 
 //Global variables
 static bool fin = FALSE;
@@ -121,7 +152,7 @@ void * process_receive_eap_ll_msg(void *arg) {
 			pre_dst_addr.sin_port = pana_params->eap_ll_dst_addr->sin_port;
 
 			//Restore the PaC Information as param
-			elmnt = getAvp(pana_params->pana_msg, PACINFORMATION_AVP);
+			elmnt = getAvp((char*)pana_params->pana_msg, PACINFORMATION_AVP);
 			memcpy (&(pana_params->eap_ll_dst_addr->sin_addr), (elmnt+sizeof(avp_pana)), sizeof (struct in_addr));
 			memcpy (&(pana_params->eap_ll_dst_addr->sin_port), (elmnt+sizeof(avp_pana)+sizeof(struct in_addr)), sizeof(short));
 		}
@@ -132,13 +163,13 @@ void * process_receive_eap_ll_msg(void *arg) {
 			pre_dst_addr6.sin6_port = pana_params->eap_ll_dst_addr6->sin6_port;
 
 			//Restore the PaC Information as param
-			elmnt = getAvp(pana_params->pana_msg, PACINFORMATION_AVP);
+			elmnt = getAvp((char*)pana_params->pana_msg, PACINFORMATION_AVP);
 			memcpy (&(pana_params->eap_ll_dst_addr6->sin6_addr), (elmnt+sizeof(avp_pana)), sizeof (struct in6_addr));
 			memcpy (&(pana_params->eap_ll_dst_addr6->sin6_port), (elmnt+sizeof(avp_pana)+sizeof(struct in6_addr)), sizeof(short));
 		}
 
 		//Restore the message sent by the PaC from the RelayedMessage AVP
-		msg = (pana*) (getAvp(pana_params->pana_msg, RELAYEDMESSAGE_AVP)+sizeof(avp_pana));
+		msg = (pana*) (getAvp((char*)pana_params->pana_msg, RELAYEDMESSAGE_AVP)+sizeof(avp_pana));
 	}
 
     if (ntohs(msg->msg_type) == PCI_MSG) {//If a PCI message is received
@@ -618,7 +649,7 @@ void* handle_network_management() {
 				}
                 if (length > 0) {
                     //FIXME: Cuándo se libera esto
-                    msg = XCALLOC(char,length);
+                    msg = (pana*)XCALLOC(char,length);
                     memcpy(msg,udp_packet,length);
                     //The message will be checked later when the session
                     //is updated
@@ -655,8 +686,7 @@ void* handle_network_management() {
 
 					radius_params = XCALLOC(struct radius_func_parameter,1);
                     struct radius_msg *radmsg = radius_msg_parse(udp_packet, length);
-                    radius_params->msg = XMALLOC (char,length);
-                    memcpy(radius_params->msg, radmsg, length);
+                    radius_params->msg = radmsg;
                     
                     add_task(process_receive_radius_msg, radius_params);
                     

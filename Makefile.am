@@ -1,4 +1,4 @@
-include $(top_srcdir)/aminclude.am #Enable Doxygen support
+# include $(top_srcdir)/aminclude.am #Enable Doxygen support
 
 SUBDIRS = src/libeapstack src
 
